@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neosapience</title>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #F9F8F6;
+      --bg-2: #F2F0EC;
+      --card: #EDEAE5;
+      --dark: #0a0a0a;
+      --dark-2: #111111;
+      --dark-card: #191919;
+      --text: #0a0a0a;
+      --text-2: #57534E;
+      --text-3: #a8a29e;
+      --inv: #ffffff;
+      --inv-2: rgba(255,255,255,0.58);
+      --inv-3: rgba(255,255,255,0.28);
+      --accent: #fe7e43;
+      --border: rgba(0,0,0,0.07);
+      --border-inv: rgba(255,255,255,0.09);
+      --nav-h: 56px;
+      --r: 18px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Pretendard Variable', Pretendard, -apple-system, sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; line-height: 1.5; -webkit-font-smoothing: antialiased; letter-spacing: -1px; }
+
+    /* ── CONTAINER — 헤더·모든 섹션 동일한 max-width·padding ── */
+    .inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: var(--nav-h); background: #fff;
+      border-bottom: 1px solid var(--border);
+    }
+    .header-inner {
+      max-width: 1280px; margin: 0 auto; padding: 0 24px;
+      height: 100%; display: flex; align-items: center;
+    }
+    .logo { text-decoration: none; display: flex; align-items: center; flex-shrink: 0; }
+    .logo img { height: 17px; width: auto; display: block; }
+    nav { flex: 1; display: flex; align-items: center; justify-content: center; gap: 1px; }
+    .nav-link {
+      padding: 5px 12px; font-size: 16px; font-weight: 500; color: var(--text-2);
+      text-decoration: none; border-radius: 100px; transition: color 0.15s, background 0.15s;
+      cursor: pointer; background: none; border: none; font-family: inherit;
+      display: flex; align-items: center; gap: 4px; white-space: nowrap;
+    }
+    .nav-link:hover, .nav-link.active { color: var(--text); background: rgba(0,0,0,0.05); }
+    .nav-item { position: relative; }
+    .nav-link svg { width: 9px; height: 9px; transition: transform 0.2s; }
+    .nav-item.open .nav-link svg { transform: rotate(180deg); }
+    .nav-item.open .nav-link { color: var(--text); background: rgba(0,0,0,0.05); }
+    .dropdown {
+      position: absolute; top: calc(100% + 8px); left: 50%;
+      transform: translateX(-50%) translateY(-6px);
+      background: #fff; border: 1px solid var(--border); border-radius: 14px;
+      padding: 6px; min-width: 180px; opacity: 0; visibility: hidden;
+      transition: opacity 0.15s, visibility 0.15s, transform 0.15s;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+    .nav-item.open .dropdown { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+    .dropdown a { display: flex; align-items: center; gap: 10px; padding: 8px 12px; font-size: 16px; color: var(--text-2); text-decoration: none; border-radius: 8px; transition: color 0.15s, background 0.15s; }
+    .dropdown a:hover { color: var(--text); background: rgba(0,0,0,0.04); }
+    .dropdown-badge { font-size: 16px; padding: 2px 6px; border-radius: 100px; background: var(--accent); color: white; font-weight: 700; margin-left: auto; }
+    .nav-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .lang-toggle { display: flex; align-items: center; gap: 1px; }
+    .lang-btn { padding: 5px 8px; font-size: 16px; font-weight: 600; color: var(--text-3); border: none; background: none; border-radius: 100px; cursor: pointer; transition: color 0.2s, background 0.2s; font-family: inherit; }
+    .lang-btn.active { color: var(--text); background: rgba(0,0,0,0.07); }
+    .btn-nav-cta { padding: 7px 16px; background: var(--dark); color: #fff; font-size: 16px; font-weight: 600; border-radius: 100px; text-decoration: none; transition: opacity 0.15s; white-space: nowrap; display: inline-flex; align-items: center; }
+    .btn-nav-cta:hover { opacity: 0.82; }
+    .menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 6px; color: var(--text); }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--bg);
+      padding-top: var(--nav-h);
+    }
+    .hero-inner {
+      max-width: 1280px; margin: 0 auto; padding: 64px 24px 80px;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+      padding-bottom: 48px;
+    }
+    .hero-title {
+      font-size: 60px;
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: -1px;
+      color: var(--text);
+      margin-bottom: 28px;
+    }
+    .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn-dark { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background: var(--dark); color: var(--inv); font-weight: 600; font-size: 16px; border-radius: 100px; text-decoration: none; transition: opacity 0.15s, transform 0.2s; font-family: inherit; border: none; cursor: pointer; white-space: nowrap; }
+    .btn-dark:hover { opacity: 0.82; transform: translateY(-1px); }
+    .btn-outline-dark-bg { display: inline-flex; align-items: center; gap: 8px; padding: 9px 20px; background: transparent; color: var(--text); font-weight: 500; font-size: 16px; border-radius: 100px; text-decoration: none; border: 1px solid rgba(0,0,0,0.15); transition: background 0.15s, border-color 0.15s; font-family: inherit; cursor: pointer; white-space: nowrap; }
+    .btn-outline-dark-bg:hover { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.25); }
+    .hero-r { padding-top: 6px; }
+    .hero-sub { font-size: 16px; color: var(--text-2); line-height: 1.8; margin-bottom: 40px; max-width: 460px; }
+    .hero-stats { display: flex; gap: 40px; flex-wrap: wrap; }
+    .hero-stat-n { font-size: 22px; font-weight: 800; color: var(--text); letter-spacing: -1px; line-height: 1; margin-bottom: 5px; display: block; }
+    .hero-stat-l { font-size: 16px; color: var(--text-3); font-weight: 500; }
+
+    /* ── PRODUCT SHOWCASE ── */
+    .showcase {
+      margin: 40px 0 0;
+      background: var(--card);
+      border-radius: var(--r);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .showcase-tabs { display: flex; align-items: center; gap: 2px; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+    .stab { padding: 6px 14px; font-size: 16px; font-weight: 600; border-radius: 100px; cursor: pointer; border: none; background: none; font-family: inherit; color: var(--text-3); transition: color 0.15s, background 0.15s; }
+    .stab.active { background: var(--dark); color: var(--inv); }
+    .stab:not(.active):hover { background: rgba(0,0,0,0.05); color: var(--text); }
+    .showcase-body { padding: 48px; }
+    .showcase-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+    .showcase-text h2 { font-size: clamp(24px, 2.8vw, 38px); font-weight: 700; letter-spacing: -1px; line-height: 1.1; margin-bottom: 16px; }
+    .showcase-text p { font-size: 16px; color: var(--text-2); line-height: 1.75; margin-bottom: 24px; max-width: 360px; }
+    .showcase-link { display: inline-flex; align-items: center; gap: 6px; font-size: 16px; font-weight: 600; color: var(--text); text-decoration: none; border-bottom: 1px solid rgba(0,0,0,0.2); padding-bottom: 2px; transition: border-color 0.15s; }
+    .showcase-link:hover { border-color: var(--text); }
+    .showcase-link.orange { color: var(--accent); border-color: rgba(254,126,67,0.35); }
+    .showcase-visual { background: var(--bg-2); border-radius: 12px; min-height: 260px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+    .vis-orb { position: absolute; border-radius: 50%; filter: blur(60px); }
+    .vis-label { font-size: 16px; font-weight: 600; color: var(--text-3); letter-spacing: -1px; text-transform: uppercase; }
+    .showcase-stats { display: flex; gap: 32px; padding: 24px 0; border-top: 1px solid var(--border); margin-top: 32px; }
+    .showcase-stat-n { font-size: 18px; font-weight: 800; letter-spacing: -1px; margin-bottom: 3px; }
+    .showcase-stat-l { font-size: 16px; color: var(--text-3); }
+
+    /* ── SECTION COMMON ── */
+    .sec { padding: 48px 0; }
+    .sec-hd { display: flex; align-items: center; gap: 10px; margin-bottom: 52px; }
+    .sec-label { font-size: 16px; font-weight: 700; letter-spacing: -1px; text-transform: uppercase; color: var(--text-3); }
+    .sec-label-inv { font-size: 16px; font-weight: 700; letter-spacing: -1px; text-transform: uppercase; color: var(--inv-3); }
+    .sec-pip { width: 1px; height: 11px; background: var(--border); }
+    .sec-pip-inv { width: 1px; height: 11px; background: var(--border-inv); }
+    .sec-num { font-size: 16px; font-weight: 700; letter-spacing: -1px; color: var(--text-3); }
+    .sec-num-inv { font-size: 16px; font-weight: 700; letter-spacing: -1px; color: var(--inv-3); }
+    .big-h { font-size: clamp(32px, 3.8vw, 56px); font-weight: 700; letter-spacing: -1px; line-height: 1.06; }
+    .big-h-inv { color: var(--inv); }
+    .body-t { font-size: 16px; color: var(--text-2); line-height: 1.8; }
+    .body-t-inv { color: var(--inv-2); }
+
+    /* ── ABOUT ── */
+    .about-sec { background: var(--bg); border-top: 1px solid var(--border); }
+    .about-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; padding-bottom: 60px; }
+    .about-facts { display: grid; grid-template-columns: repeat(3,1fr); border-top: 1px solid var(--border); }
+    .about-fact { padding: 36px 28px; border-right: 1px solid var(--border); }
+    .about-fact:first-child { padding-left: 0; }
+    .about-fact:last-child { border-right: none; padding-right: 0; }
+    .afl { font-size: 16px; font-weight: 700; letter-spacing: -1px; text-transform: uppercase; color: var(--text-3); margin-bottom: 10px; }
+    .afv { font-size: clamp(20px, 2.2vw, 32px); font-weight: 800; letter-spacing: -1px; line-height: 1.1; }
+
+    /* ── SERVICES (bento cards) ── */
+    .svc-sec { background: var(--bg-2); border-top: 1px solid var(--border); }
+    .svc-grid { display: grid; grid-template-columns: 3fr 2fr; gap: 12px; align-items: start; }
+    .svc-card {
+      background: #fff; border-radius: 20px;
+      border: none; padding: 40px 40px 0;
+      display: flex; flex-direction: column;
+      position: relative; overflow: hidden;
+    }
+    .svc-tag { font-size: 16px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 20px; color: var(--text-3); }
+    .svc-title { font-size: clamp(24px, 2.6vw, 36px); font-weight: 700; letter-spacing: -1px; color: var(--text); line-height: 1.1; margin-bottom: 14px; }
+    .svc-desc { font-size: 16px; color: var(--text-2); line-height: 1.75; margin-bottom: 0; max-width: 360px; }
+    .svc-link { display: inline-flex; align-items: center; gap: 7px; font-size: 16px; font-weight: 600; text-decoration: none; padding: 9px 18px; border-radius: 100px; transition: opacity 0.15s; align-self: flex-start; margin-bottom: 32px; }
+    .svc-link:hover { opacity: 0.78; }
+    .svc-link.orange { background: rgba(254,126,67,0.10); color: var(--accent); border: 1px solid rgba(254,126,67,0.22); }
+    .svc-link.purple { background: rgba(124,92,252,0.08); color: #7c5cfc; border: 1px solid rgba(124,92,252,0.22); }
+    .svc-card-visual { flex: 1; min-height: 200px; margin: 16px -40px 0; position: relative; overflow: hidden; border-radius: 12px 12px 20px 20px; }
+    .svc-card-visual img { width: 100%; height: 100%; object-fit: cover; object-position: top left; display: block; position: absolute; inset: 0; }
+    .svc-nums { display: flex; gap: 28px; padding: 20px 0; border-top: 1px solid var(--border); }
+    .svc-n { font-size: 18px; font-weight: 800; color: var(--text); letter-spacing: -1px; line-height: 1; margin-bottom: 4px; }
+    .svc-l { font-size: 16px; color: var(--text-3); }
+
+    /* ── TECH ── */
+    .tech-sec { background: var(--bg); border-top: 1px solid var(--border); }
+    .tech-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; padding-bottom: 60px; }
+    .tech-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+    .tech-card { background: #fff; border-radius: var(--r); border: 1px solid var(--border); padding: 36px; transition: border-color 0.2s; }
+    .tech-card:hover { border-color: rgba(0,0,0,0.13); }
+    .tc-num { font-size: 16px; font-weight: 700; letter-spacing: -1px; color: var(--accent); margin-bottom: 24px; }
+    .tech-card h3 { font-size: 17px; font-weight: 700; color: var(--text); letter-spacing: -1px; margin-bottom: 12px; }
+    .tech-card p { font-size: 16px; color: var(--text-2); line-height: 1.75; }
+    .tech-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 20px; }
+    .tech-tag { font-size: 16px; padding: 3px 9px; border: 1px solid var(--border); border-radius: 100px; color: var(--text-3); }
+
+    /* ── PAPERS ── */
+    .papers-top { cursor: pointer; user-select: none; margin-top: 52px; }
+    .papers-top-inner { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-top: 1px solid var(--border); border-bottom: 1px dashed var(--border); width: 100%; transition: border-color 0.15s; }
+    .papers-top.open .papers-top-inner { border-bottom-color: transparent; }
+    .papers-kicker { font-size: 16px; font-weight: 600; color: var(--text); }
+    .papers-top-right { display: flex; align-items: center; }
+    .papers-chevron { display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform 0.3s; color: var(--text-3); }
+    .papers-top.open .papers-chevron { transform: rotate(180deg); }
+    .papers-list { overflow: hidden; max-height: 0; transition: max-height 0.5s ease; }
+    .papers-list.open { max-height: 4000px; }
+    .paper-item { display: grid; grid-template-columns: 140px 1fr auto; gap: 0 28px; padding: 20px 0; border-bottom: 1px dashed var(--border); align-items: start; text-decoration: none; color: inherit; transition: opacity 0.15s; }
+    .paper-item:hover { opacity: 0.5; }
+    .paper-meta { display: flex; flex-direction: column; gap: 5px; white-space: nowrap; }
+    .paper-num { font-size: 16px; font-weight: 700; color: var(--text-3); }
+    .paper-venue { font-size: 16px; font-weight: 700; letter-spacing: -1px; text-transform: uppercase; color: var(--accent); }
+    .paper-title { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 5px; line-height: 1.45; }
+    .paper-authors { font-size: 16px; color: var(--text-3); }
+    .paper-year { font-size: 16px; color: var(--text-3); white-space: nowrap; }
+
+    /* ── IR ── */
+    .ir-sec { background: var(--bg); border-top: 1px solid var(--border); }
+    .btn-outline { padding: 9px 20px; background: transparent; color: var(--text); font-weight: 500; font-size: 16px; border: 1px solid var(--border); border-radius: 100px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; font-family: inherit; transition: border-color 0.15s, background 0.15s; }
+    .btn-outline:hover { border-color: #999; }
+    .ir-tabs-layout { display: grid; grid-template-columns: 180px 1fr; gap: 20px; align-items: start; }
+    .ir-tab-nav { display: flex; flex-direction: column; gap: 8px; }
+    .ir-tab-btn { padding: 16px 20px; font-size: 16px; font-weight: 700; letter-spacing: -0.5px; border-radius: 12px; border: 1px solid var(--border); background: #fff; color: var(--text); cursor: pointer; text-align: left; font-family: inherit; transition: background 0.15s, color 0.15s, border-color 0.15s; }
+    .ir-tab-btn.active { background: #2e2e2e; color: #fff; border-color: #2e2e2e; }
+    .ir-tab-btn:not(.active):hover { background: var(--bg-2); border-color: rgba(0,0,0,0.12); }
+    .ir-pane { display: none; }
+    .ir-pane.active { display: block; }
+    .ir-pane-hd { display: flex; align-items: baseline; gap: 14px; margin-bottom: 20px; }
+    .ir-pane-hd h3 { font-size: 17px; font-weight: 700; letter-spacing: -0.5px; }
+    .ir-pane-hd span { font-size: 16px; color: var(--text-3); }
+    .ir-table-card { background: #fff; border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; }
+    .ir-table { width: 100%; border-collapse: collapse; }
+    .ir-table th { padding: 14px 24px; font-size: 16px; font-weight: 600; color: var(--text-2); text-align: left; border-bottom: 1px solid var(--border); background: var(--bg); }
+    .ir-table th.col-num, .ir-table td.col-num { text-align: right; }
+    .ir-table td { padding: 20px 24px; font-size: 16px; color: var(--text); border-bottom: 1px solid var(--border); }
+    .ir-table tbody tr:last-child td { border-bottom: none; font-weight: 700; }
+    .ir-empty { padding: 60px 24px; text-align: center; font-size: 16px; color: var(--text-3); }
+    .ir-list { list-style: none; padding: 0; margin: 0; }
+    .ir-list li { border-bottom: 1px solid var(--border); }
+    .ir-list li:last-child { border-bottom: none; }
+    .ir-list a { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px; text-decoration: none; color: var(--text); transition: background 0.15s; }
+    .ir-list a:hover { background: var(--bg-2); }
+    .ir-list-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+    .ir-list-title { font-size: 16px; font-weight: 600; color: var(--text); }
+    .ir-list-sub { font-size: 16px; color: var(--text-3); }
+    .ir-list-meta { display: flex; align-items: center; gap: 14px; flex-shrink: 0; color: var(--text-3); }
+    .ir-list-date { font-size: 16px; color: var(--text-3); white-space: nowrap; }
+    .ir-list-icon { display: inline-flex; align-items: center; justify-content: center; }
+    .ir-cta-card { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 28px 24px; }
+    .ir-cta-text { display: flex; flex-direction: column; gap: 6px; }
+    .ir-cta-title { font-size: 16px; font-weight: 700; color: var(--text); }
+    .ir-cta-sub { font-size: 16px; color: var(--text-3); line-height: 1.6; }
+    .ir-cta-btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; background: var(--dark); color: #fff; border-radius: 100px; font-size: 16px; font-weight: 600; text-decoration: none; transition: opacity 0.15s, transform 0.2s; flex-shrink: 0; }
+    .ir-cta-btn:hover { opacity: 0.82; transform: translateY(-1px); }
+    @media (max-width: 768px) {
+      .ir-tabs-layout { grid-template-columns: 1fr; }
+      .ir-tab-nav { flex-direction: row; flex-wrap: wrap; }
+      .ir-table th, .ir-table td { padding: 12px 16px; }
+    }
+
+    /* ── CONTACT ── */
+    .contact-sec { background: var(--bg); padding: 48px 0; border-top: 1px solid var(--border); }
+    .contact-card { background: var(--card); border-radius: 24px; border: 1px solid var(--border); padding: 48px 48px; text-align: center; }
+    .contact-inner { max-width: 560px; margin: 0 auto; }
+    .contact-h { font-size: clamp(36px, 5.5vw, 76px); font-weight: 700; letter-spacing: -1px; color: var(--text); line-height: 1.04; margin-bottom: 20px; }
+    .contact-sub { font-size: 16px; color: var(--text-2); line-height: 1.75; margin-bottom: 40px; }
+    .btn-accent { display: inline-flex; align-items: center; gap: 8px; padding: 13px 28px; background: var(--accent); color: white; font-weight: 700; font-size: 16px; border-radius: 100px; text-decoration: none; transition: opacity 0.15s, transform 0.2s; }
+    .btn-accent:hover { opacity: 0.88; transform: translateY(-2px); }
+
+    /* ── FOOTER ── */
+    footer { background: var(--bg-2); border-top: 1px solid var(--border); }
+    .footer-inner { max-width: 1280px; margin: 0 auto; padding: 52px 24px 44px; display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: start; }
+    .footer-left { display: flex; flex-direction: column; }
+    .footer-left .logo { display: inline-flex; margin-bottom: 24px; }
+    .footer-company-name { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 10px; }
+    .footer-info { font-size: 16px; color: var(--text-2); line-height: 1.9; margin-bottom: 28px; }
+    .footer-copyright { font-size: 16px; color: var(--text-3); }
+    .footer-right { display: flex; flex-direction: column; align-items: flex-end; padding-top: 4px; }
+    .footer-nav { display: flex; gap: 2px; flex-wrap: wrap; justify-content: flex-end; }
+    .footer-nav a { font-size: 16px; font-weight: 500; color: var(--text-2); text-decoration: none; padding: 5px 12px; }
+
+    /* ── FLOWING GRADIENT ── */
+    .flow-bg {
+      position: absolute; inset: 0;
+      background: #0e0c18;
+      overflow: hidden;
+    }
+    .flow-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      will-change: transform;
+    }
+    .grain-overlay {
+      position: absolute; inset: 0; z-index: 2;
+      opacity: 0.55;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 160px 160px;
+      pointer-events: none;
+    }
+    @keyframes blob1 {
+      0%,100% { transform: translate(0%,0%) scale(1); }
+      25%      { transform: translate(14%,20%) scale(1.15); }
+      50%      { transform: translate(-10%,8%) scale(0.9); }
+      75%      { transform: translate(6%,-16%) scale(1.1); }
+    }
+    @keyframes blob2 {
+      0%,100% { transform: translate(0%,0%) scale(1); }
+      33%      { transform: translate(-18%,-12%) scale(1.12); }
+      66%      { transform: translate(12%,18%) scale(0.88); }
+    }
+    @keyframes blob3 {
+      0%,100% { transform: translate(0%,0%) scale(1); }
+      40%      { transform: translate(20%,-14%) scale(1.18); }
+      80%      { transform: translate(-8%,22%) scale(0.85); }
+    }
+    @keyframes blob4 {
+      0%,100% { transform: translate(0%,0%) scale(1); }
+      30%      { transform: translate(-10%,16%) scale(1.08); }
+      70%      { transform: translate(16%,-8%) scale(0.93); }
+    }
+
+    /* ── ANIMATIONS ── */
+    .mask-wrap { display: inline-block; overflow: hidden; vertical-align: bottom; }
+    .mask-inner { display: inline-block; transform: translateY(110%); opacity: 0; transition: transform 0.9s cubic-bezier(0.16,1,0.3,1), opacity 0s linear 0.9s; }
+    .mask-inner.in { transform: translateY(0); opacity: 1; transition: transform 0.9s cubic-bezier(0.16,1,0.3,1), opacity 0s; }
+    .fade-up { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fade-up.in { opacity: 1; transform: translateY(0); }
+
+    /* ── MOBILE MENU ── */
+    .mobile-menu {
+      display: none;
+      position: fixed; top: var(--nav-h); left: 0; right: 0; z-index: 99;
+      background: #fff; border-bottom: 1px solid var(--border);
+      padding: 16px 24px 24px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+      transform: translateY(-8px); opacity: 0;
+      pointer-events: none;
+      transition: transform 0.22s ease, opacity 0.22s ease;
+    }
+    .mobile-menu.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+    .mobile-menu a, .mobile-menu button {
+      display: block; width: 100%; text-align: left;
+      padding: 13px 0; font-size: 16px; font-weight: 500;
+      color: var(--text-2); text-decoration: none; background: none; border: none;
+      border-bottom: 1px solid var(--border); cursor: pointer; font-family: inherit;
+      transition: color 0.15s;
+    }
+    .mobile-menu a:last-child, .mobile-menu button:last-of-type { border-bottom: none; }
+    .mobile-menu a:hover, .mobile-menu button:hover { color: var(--text); }
+    .mobile-menu .mob-sub { padding-left: 16px; font-size: 16px; color: var(--text-3); }
+    .mobile-menu .mob-cta {
+      display: block; margin-top: 16px; padding: 13px 20px; text-align: center;
+      background: var(--dark); color: #fff; border-radius: 100px;
+      font-size: 16px; font-weight: 600; text-decoration: none; border: none;
+    }
+    .menu-btn.is-open svg { display: none; }
+    .menu-btn.is-open::after {
+      content: '✕'; font-size: 18px; line-height: 1; display: block;
+    }
+    .mob-lang {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 0; border-bottom: 1px solid var(--border);
+    }
+    .mob-lang-label { font-size: 16px; font-weight: 500; color: var(--text-2); }
+    .mob-lang-btns { display: flex; gap: 4px; }
+    .mob-lang-btns .lang-btn { font-size: 16px; padding: 6px 12px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 32px; }
+      .hero-title { font-size: clamp(36px, 6vw, 60px); }
+      .showcase-grid { grid-template-columns: 1fr; }
+      .showcase-visual { min-height: 200px; }
+      .about-2col { grid-template-columns: 1fr; gap: 32px; }
+      .about-facts { grid-template-columns: 1fr 1fr; }
+      .about-fact:nth-child(2) { border-right: none; }
+      .about-fact:nth-child(3) { border-top: 1px solid var(--border); padding-left: 0; border-right: none; }
+      .svc-grid { grid-template-columns: 1fr; }
+      .tech-2col { grid-template-columns: 1fr; gap: 28px; }
+      .tech-grid { grid-template-columns: 1fr 1fr; }
+      .contact-card { padding: 64px 40px; }
+      .contact-inner { max-width: 100%; text-align: left; }
+      .showcase-body { padding: 36px; }
+    }
+
+    @media (max-width: 768px) {
+      nav { display: none; }
+      .btn-nav-cta { display: none; }
+      .lang-toggle { display: none; }
+      .nav-right { margin-left: auto; }
+      .menu-btn { display: flex; align-items: center; justify-content: center; }
+      .mobile-menu { display: block; }
+
+      .inner { padding: 0 20px; }
+      .hero-inner { padding: 40px 20px 60px; }
+      .hero-title { font-size: clamp(32px, 9vw, 48px); letter-spacing: -1px; margin-bottom: 20px; }
+      .hero-sub { font-size: 16px; margin-bottom: 28px; }
+      .hero-stats { gap: 20px; }
+      .hero-grid { gap: 24px; padding-bottom: 32px; }
+
+      .sec { padding: 64px 0; }
+      .sec-hd { margin-bottom: 36px; }
+
+      .about-facts { grid-template-columns: 1fr 1fr; }
+      .about-fact { padding: 28px 20px; }
+      .about-fact:first-child { padding-left: 0; }
+      .about-fact:last-child { padding-right: 0; }
+
+      .svc-card { padding: 28px; min-height: 360px; }
+      .showcase-body { padding: 24px; }
+      .showcase-grid { gap: 28px; }
+
+      .tech-2col { padding-bottom: 36px; }
+      .tech-grid { grid-template-columns: 1fr; }
+      .tech-card { padding: 28px; }
+
+      .papers-top { padding-top: 36px; }
+      .paper-item { grid-template-columns: 40px 1fr; gap: 14px; }
+      .paper-year { display: none; }
+      .paper-title { font-size: 16px; }
+
+      .ir-top { flex-direction: column; align-items: flex-start; gap: 14px; }
+
+      .contact-card { padding: 48px 24px; }
+      .contact-h { letter-spacing: -1px; }
+
+      .footer-inner { padding: 36px 20px 32px; }
+    }
+
+    @media (max-width: 480px) {
+      .inner { padding: 0 16px; }
+      .hero-inner { padding: 32px 16px 48px; }
+      .header-inner { padding: 0 16px; }
+      .hero-title { font-size: clamp(28px, 10.5vw, 40px); }
+      .hero-r { padding-top: 0; }
+
+      .sec { padding: 48px 0; }
+      .sec-hd { margin-bottom: 28px; }
+      .big-h { font-size: clamp(28px, 8vw, 40px); letter-spacing: -1px; }
+
+      .about-2col { gap: 20px; }
+      .about-facts { grid-template-columns: 1fr; }
+      .about-fact { border-right: none !important; border-top: 1px solid var(--border) !important; padding: 20px 0 !important; }
+      .about-fact:first-child { border-top: none !important; }
+
+      .svc-card { padding: 22px; min-height: auto; }
+      .svc-nums { gap: 20px; }
+      .showcase-body { padding: 20px; }
+      .showcase-tabs { padding: 10px 14px; }
+
+      .tech-card { padding: 22px; }
+      .tech-grid { gap: 10px; }
+
+      .paper-item { padding: 18px 0; }
+
+      .ir-item { gap: 10px; }
+      .ir-h { font-size: clamp(24px, 7vw, 36px); }
+
+      .contact-card { padding: 36px 18px; border-radius: 16px; }
+      .btn-accent { font-size: 16px; padding: 12px 22px; }
+
+      .footer-inner { padding: 28px 16px 24px; }
+      .stab { padding: 5px 11px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="siteHeader">
+  <div class="header-inner">
+  <a href="#" class="logo"><img src="logo.svg" alt="Neosapience"></a>
+  <nav id="mainNav">
+    <div class="nav-item"><a class="nav-link" href="#about" data-ko="회사소개" data-en="About">회사소개</a></div>
+    <div class="nav-item" id="serviceNav">
+      <button class="nav-link" id="serviceBtn" data-ko="제품 소개" data-en="Products">
+        제품 소개 <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4l4 4 4-4"/></svg>
+      </button>
+      <div class="dropdown">
+        <a href="#typecast"><span data-ko="타입캐스트" data-en="Typecast">타입캐스트</span></a>
+        <a href="#neona"><span data-ko="네오나" data-en="Neona">네오나</span></a>
+      </div>
+    </div>
+    <div class="nav-item"><a class="nav-link" href="#technology" data-ko="기술 &amp; 연구" data-en="Tech & Research">기술 &amp; 연구</a></div>
+    <div class="nav-item"><a class="nav-link" href="#ir" data-ko="IR / 공지" data-en="IR / Notice">IR / 공지</a></div>
+  </nav>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btnKo" onclick="setLang('ko')">KO</button>
+      <button class="lang-btn" id="btnEn" onclick="setLang('en')">EN</button>
+    </div>
+    <a href="mailto:contact@neosapience.com" class="btn-nav-cta" data-ko="문의하기" data-en="Contact">문의하기</a>
+    <button class="menu-btn" id="menuBtn">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 5h14M3 10h14M3 15h14"/></svg>
+    </button>
+  </div>
+  </div><!-- /.header-inner -->
+</header>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" class="mob-link" data-ko="회사소개" data-en="About">회사소개</a>
+  <a href="#typecast" class="mob-link mob-sub" data-ko="타입캐스트" data-en="Typecast">타입캐스트</a>
+  <a href="#neona" class="mob-link mob-sub" data-ko="네오나" data-en="Neona">네오나</a>
+  <a href="#technology" class="mob-link" data-ko="기술 &amp; 연구" data-en="Tech &amp; Research">기술 &amp; 연구</a>
+  <a href="#ir" class="mob-link" data-ko="IR / 공지" data-en="IR / Notice">IR / 공지</a>
+  <div class="mob-lang">
+    <span class="mob-lang-label" data-ko="언어 선택" data-en="Language">언어 선택</span>
+    <div class="mob-lang-btns">
+      <button class="lang-btn active" id="mobBtnKo" onclick="setLang('ko')">KO</button>
+      <button class="lang-btn" id="mobBtnEn" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+  <a href="mailto:contact@neosapience.com" class="mob-cta" data-ko="문의하기" data-en="Contact">문의하기</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="heroSection">
+  <div class="hero-inner">
+    <div class="hero-grid">
+      <!-- LEFT: title + buttons -->
+      <div>
+        <p class="sec-label" style="color:var(--accent);margin-bottom:16px;">ABOUT</p>
+        <h1 class="hero-title anim-hero">
+          <span data-ko="누구나 감정까지 나누며<br>AI와 자연스럽게<br>소통할 수 있도록 돕는다" data-en="Helping Everyone Connect<br>with AI Naturally,<br>Even Emotionally">누구나 감정까지 나누며<br>AI와 자연스럽게<br>소통할 수 있도록 돕는다</span>
+        </h1>
+      </div>
+    </div>
+
+    <!-- Flow gradient banner -->
+    <div class="fade-up" style="transition-delay:.5s;margin-top:48px;border-radius:var(--r);overflow:hidden;height:480px;position:relative;background:#120804;">
+      <div class="flow-bg" style="background:#120804;">
+        <div class="flow-blob" style="width:80%;height:80%;top:-20%;left:-10%;background:#c85010;opacity:0.95;animation:blob1 10s ease-in-out infinite;"></div>
+        <div class="flow-blob" style="width:65%;height:65%;bottom:-25%;right:-5%;background:#d4780a;opacity:0.80;animation:blob2 13s ease-in-out infinite;"></div>
+        <div class="flow-blob" style="width:55%;height:55%;top:5%;right:0%;background:#5a1808;opacity:1;animation:blob3 15s ease-in-out infinite;"></div>
+        <div class="flow-blob" style="width:50%;height:50%;bottom:0%;left:25%;background:#a83010;opacity:0.7;animation:blob4 9s ease-in-out infinite;"></div>
+        <div class="flow-blob" style="width:40%;height:40%;top:15%;left:45%;background:#2a0c04;opacity:0.9;animation:blob1 11s ease-in-out infinite reverse;"></div>
+      </div>
+      <div class="grain-overlay"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-sec sec" id="about">
+  <div class="inner">
+    <div class="fade-up" style="max-width:720px;padding:48px 0;">
+      <p class="body-t" style="margin-bottom:20px;"
+        data-ko="네오사피엔스는 사람과 기술의 소통 방식을 혁신하는 Voice &amp; Conversational AI 기업입니다.<br>우리는 누구나 AI와 감정까지 나누며 자연스럽게 상호작용할 수 있는 세상을 만들고자 합니다."
+        data-en="Neosapience is a Voice &amp; Conversational AI company reinventing how people communicate with technology.<br>Our mission is to build a world where anyone can interact with AI naturally — sharing emotion, not just information.">네오사피엔스는 사람과 기술의 소통 방식을 혁신하는 Voice &amp; Conversational AI 기업입니다.<br>우리는 누구나 AI와 감정까지 나누며 자연스럽게 상호작용할 수 있는 세상을 만들고자 합니다.</p>
+      <p class="body-t" style="margin-bottom:48px;"
+        data-ko="네오사피엔스는 사람처럼 자연스럽고 표현력 있는 음성을 만드는 것에서 출발했습니다.<br>이제는 음성을 '생성'하는 단계를 넘어, 대화가 실제로 이어지고 완주되는 경험을 만들기 위해 대화형 에이전트와 양방향 음성 인터랙션으로 확장하고 있습니다."
+        data-en="We started by creating voices that sound as natural and expressive as a real person.<br>Now we're going beyond synthesis — building conversational agents and two-way voice interactions that make dialogue truly feel alive.">네오사피엔스는 사람처럼 자연스럽고 표현력 있는 음성을 만드는 것에서 출발했습니다.<br>이제는 음성을 '생성'하는 단계를 넘어, 대화가 실제로 이어지고 완주되는 경험을 만들기 위해 대화형 에이전트와 양방향 음성 인터랙션으로 확장하고 있습니다.</p>
+
+      <div style="display:flex;flex-direction:column;gap:24px;">
+        <div>
+          <span style="font-size:16px;font-weight:700;color:var(--text);">Typecast</span>
+          <p class="body-t" style="margin-top:8px;"
+            data-ko="대본 하나로 누구나 손쉽게 여러 AI 보이스 캐릭터를 캐스팅해, 자연스럽고 개성 있는 음성과 영상 콘텐츠를 제작할 수 있도록 돕는 크리에이티브 TTS 서비스입니다."
+            data-en="A creative TTS platform that lets anyone cast multiple AI voice characters from a single script — producing natural, expressive audio and video content with ease.">대본 하나로 누구나 손쉽게 여러 AI 보이스 캐릭터를 캐스팅해, 자연스럽고 개성 있는 음성과 영상 콘텐츠를 제작할 수 있도록 돕는 크리에이티브 TTS 서비스입니다.</p>
+        </div>
+        <div style="border-top:1px dashed var(--border);margin:8px 0;"></div>
+        <div>
+          <span style="font-size:16px;font-weight:700;color:var(--text);">Neona</span>
+          <p class="body-t" style="margin-top:8px;"
+            data-ko="감정까지 교류하며 소통할 수 있는 대화형 AI 에이전트를, 원하는 채널과 페르소나로 설계·배포하고 보유한 IP(캐릭터/브랜드 자산)를 활용해 고객과 실시간으로 소통할 수 있는 Live Chat 경험까지 제공하는 대화형 AI 플랫폼입니다."
+            data-en="A conversational AI platform — design and deploy emotionally intelligent agents across any channel and persona, and bring your IP (characters, brand assets) to life with real-time Live Chat experiences for customer engagement.">감정까지 교류하며 소통할 수 있는 대화형 AI 에이전트를, 원하는 채널과 페르소나로 설계·배포하고 보유한 IP(캐릭터/브랜드 자산)를 활용해 고객과 실시간으로 소통할 수 있는 Live Chat 경험까지 제공하는 대화형 AI 플랫폼입니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="svc-sec sec" id="services">
+  <div class="inner">
+    <div class="sec-hd">
+      <span class="sec-label" data-ko="제품 소개" data-en="Products">제품 소개</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:stretch;">
+      <!-- Typecast — 왼쪽 -->
+      <div class="svc-card fade-up" id="typecast">
+        <div class="svc-tag">TYPECAST</div>
+        <h3 class="svc-title" data-ko="내 콘텐츠에 딱 맞는 AI 보이스로<br>콘텐츠 제작 뚝딱!" data-en="Create Content Instantly<br>with the Perfect AI Voice">내 콘텐츠에 딱 맞는 AI 보이스로<br>콘텐츠 제작 뚝딱!</h3>
+        <p class="svc-desc"
+          data-ko="대본 하나로 누구나 손쉽게 콘텐츠 제작이 뚝딱!<br>여러 자연스럽고 개성 있는 AI 보이스 캐릭터를 캐스팅해,<br>음성과 영상 콘텐츠를 제작할 수 있도록 돕는 크리에이티브 TTS 서비스입니다."
+          data-en="Create content in a snap — no expertise needed.<br>Cast multiple natural, expressive AI voice characters<br>and bring your audio and video content to life.">
+          대본 하나로 누구나 손쉽게 콘텐츠 제작이 뚝딱!<br>여러 자연스럽고 개성 있는 AI 보이스 캐릭터를 캐스팅해,<br>음성과 영상 콘텐츠를 제작할 수 있도록 돕는 크리에이티브 TTS 서비스입니다.
+        </p>
+        <a href="https://typecast.ai" target="_blank" style="position:absolute;top:40px;right:40px;display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;min-width:40px;min-height:40px;flex-shrink:0;background:var(--dark);border-radius:50%;transition:opacity 0.15s,transform 0.2s;" onmouseover="this.style.opacity='.75';this.style.transform='translateY(-2px)'" onmouseout="this.style.opacity='1';this.style.transform='translateY(0)'"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M4 9h10M9 4l5 5-5 5"/></svg></a>
+        <div class="svc-card-visual">
+          <img src="typecast-app.png" alt="Typecast app interface">
+        </div>
+      </div>
+      <!-- Neona — 단일 카드 -->
+      <div class="svc-card fade-up" style="padding:40px 40px 0;">
+        <div class="svc-tag">NEONA</div>
+        <h3 class="svc-title" data-ko="감정으로 대화하는<br>AI Voice 플랫폼" data-en="The AI Voice Platform<br>That Speaks With Emotion">감정으로 대화하는<br>AI Voice 플랫폼</h3>
+        <p class="svc-desc" data-ko="대화형 AI 에이전트를 원하는 채널과 페르소나로 설계·배포하고, 보유한 IP를 활용해 고객과 실시간으로 소통하는 Live Chat 경험까지 제공합니다." data-en="Design and deploy conversational AI agents for any channel and persona, and bring your IP to life with real-time Live Chat experiences for customer engagement.">대화형 AI 에이전트를 원하는 채널과 페르소나로 설계·배포하고, 보유한 IP를 활용해 고객과 실시간으로 소통하는 Live Chat 경험까지 제공합니다.</p>
+        <a href="https://agents.neona.ai/" target="_blank" style="position:absolute;top:40px;right:40px;display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;min-width:40px;min-height:40px;flex-shrink:0;background:var(--dark);border-radius:50%;transition:opacity 0.15s,transform 0.2s;" onmouseover="this.style.opacity='.75';this.style.transform='translateY(-2px)'" onmouseout="this.style.opacity='1';this.style.transform='translateY(0)'"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M4 9h10M9 4l5 5-5 5"/></svg></a>
+        <div class="svc-card-visual" style="background:#0e0c18;">
+          <div class="flow-bg" style="background:#0e0c18;">
+            <div class="flow-blob" style="width:80%;height:80%;top:-20%;left:-10%;background:#7c5cfc;opacity:0.85;animation:blob1 10s ease-in-out infinite;"></div>
+            <div class="flow-blob" style="width:65%;height:65%;bottom:-25%;right:-5%;background:#5b3dd1;opacity:0.75;animation:blob2 13s ease-in-out infinite;"></div>
+            <div class="flow-blob" style="width:55%;height:55%;top:5%;right:0%;background:#1a0f3f;opacity:1;animation:blob3 15s ease-in-out infinite;"></div>
+          </div>
+          <div class="grain-overlay"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECHNOLOGY -->
+<section class="tech-sec sec" id="technology">
+  <div class="inner">
+    <div class="sec-hd">
+      <span class="sec-label" data-ko="기술 &amp; 연구" data-en="Tech & Research">기술 &amp; 연구</span>
+    </div>
+    <div class="tech-2col">
+      <h2 class="big-h anim-title" data-ko="독자적인 AI 기술" data-en="Proprietary AI Technology">독자적인 AI 기술</h2>
+      <p class="body-t fade-up"
+        data-ko="수십 편의 논문과 수년간의 R&D로 쌓아온 독자적 기술. NeurIPS, Interspeech, ICASSP 등 세계 최고 수준의 AI 학회에서 연구 성과를 발표해왔습니다."
+        data-en="Proprietary technology built through decades of research and R&D. Presented at NeurIPS, Interspeech, ICASSP, and other world-class AI venues.">
+        수십 편의 논문과 수년간의 R&amp;D로 쌓아온 독자적 기술. NeurIPS, Interspeech, ICASSP 등 세계 최고 수준의 AI 학회에서 연구 성과를 발표해왔습니다.
+      </p>
+    </div>
+    <div class="tech-grid">
+      <div class="tech-card fade-up">
+        <div class="tc-num">01</div>
+        <h3>Speech Foundation Model</h3>
+        <p data-ko="수십억 개의 파라미터 기반 대규모 음성 파운데이션 모델로 자연스럽고 감성적인 음성을 생성합니다." data-en="A large-scale speech foundation model based on billions of parameters, generating natural and emotionally expressive voices.">수십억 개의 파라미터 기반 대규모 음성 파운데이션 모델로 자연스럽고 감성적인 음성을 생성합니다.</p>
+        <div class="tech-tags"><span class="tech-tag">Foundation Model</span><span class="tech-tag">TTS</span><span class="tech-tag">Emotion</span></div>
+      </div>
+      <div class="tech-card fade-up" style="transition-delay:.1s">
+        <div class="tc-num">02</div>
+        <h3 data-ko="감정 표현 음성 복제" data-en="Emotional Voice Cloning">감정 표현 음성 복제</h3>
+        <p data-ko="몇 초의 음성 샘플만으로 누구의 목소리든 감정 표현과 함께 재현하는 제로샷 음성 클로닝 기술." data-en="Zero-shot voice cloning that reproduces anyone's voice with emotional expression from seconds of audio.">몇 초의 음성 샘플만으로 누구의 목소리든 감정 표현과 함께 재현하는 제로샷 음성 클로닝 기술.</p>
+        <div class="tech-tags"><span class="tech-tag">Voice Cloning</span><span class="tech-tag">Zero-shot</span><span class="tech-tag">Multilingual</span></div>
+      </div>
+      <div class="tech-card fade-up" style="transition-delay:.2s">
+        <div class="tc-num">03</div>
+        <h3 data-ko="AI 영상 합성" data-en="AI Video Synthesis">AI 영상 합성</h3>
+        <p data-ko="텍스트와 음성 입력만으로 실사에 가까운 AI 아바타 영상을 생성하는 멀티모달 합성 기술." data-en="Multimodal synthesis generating photorealistic AI avatar videos from text and voice input alone.">텍스트와 음성 입력만으로 실사에 가까운 AI 아바타 영상을 생성하는 멀티모달 합성 기술.</p>
+        <div class="tech-tags"><span class="tech-tag">Video Synthesis</span><span class="tech-tag">Avatar</span><span class="tech-tag">Multimodal</span></div>
+      </div>
+    </div>
+    <div class="papers-top" id="papersTop" onclick="togglePapers()">
+      <div class="papers-top-inner">
+        <span class="papers-kicker" data-ko="발표 논문" data-en="Research Papers">발표 논문</span>
+        <div class="papers-top-right">
+          <span class="papers-chevron"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6l5 5 5-5"/></svg></span>
+        </div>
+      </div>
+    </div>
+    <div class="papers-list" id="papersList">
+      <a href="https://arxiv.org/abs/2312.02532" target="_blank" class="paper-item">
+        <div class="paper-meta"><span class="paper-num">Dec 6, 2023</span><span class="paper-venue">arXiv</span></div>
+        <div><div class="paper-title">DRAFT: Dense Retrieval Augmented Few-shot Topic classifier Framework</div><div class="paper-authors">Keonwoo Kim, Younggun Lee</div></div>
+        <span class="paper-year">2023</span>
+      </a>
+      <a href="https://arxiv.org/abs/2303.08329" target="_blank" class="paper-item">
+        <div class="paper-meta"><span class="paper-num">Mar 15, 2023</span><span class="paper-venue">ICASSP</span></div>
+        <div><div class="paper-title">Cross-speaker Emotion Transfer by Manipulating Speech Style Latents</div><div class="paper-authors">Suhee Jo, Younggun Lee, Yookyung Shin, Yeongtae Hwang, Taesu Kim</div></div>
+        <span class="paper-year">2023</span>
+      </a>
+      <a href="https://arxiv.org/abs/2207.06000" target="_blank" class="paper-item">
+        <div class="paper-meta"><span class="paper-num">Jul 13, 2022</span><span class="paper-venue">Interspeech</span></div>
+        <div><div class="paper-title">Text-driven Emotional Style Control and Cross-speaker Style Transfer in Neural TTS</div><div class="paper-authors">Yookyung Shin, Younggun Lee, Suhee Jo, Yeongtae Hwang, Taesu Kim</div></div>
+        <span class="paper-year">2022</span>
+      </a>
+      <a href="https://arxiv.org/abs/2205.13368" target="_blank" class="paper-item">
+        <div class="paper-meta"><span class="paper-num">May 26, 2022</span><span class="paper-venue">arXiv</span></div>
+        <div><div class="paper-title">One-Shot Face Reenactment on Megapixels</div><div class="paper-authors">Wonjun Kang, Geonsu Lee, Hyung Il Koo, Nam Ik Cho</div></div>
+        <span class="paper-year">2022</span>
+      </a>
+      <a href="https://arxiv.org/abs/2110.02584" target="_blank" class="paper-item">
+        <div class="paper-meta"><span class="paper-num">Oct 6, 2021</span><span class="paper-venue">Interspeech</span></div>
+        <div><div class="paper-title">EdiTTS: Score-based Editing for Controllable Text-to-Speech</div><div class="paper-authors">Jaesung Tae, Hyeongju Kim, Taesu Kim</div></div>
+        <span class="paper-year">2022</span>
+      </a>
+      <a href="https://arxiv.org/abs/2106.07886" target="_blank" class="paper-item">
+        <div class="paper-meta"><span class="paper-num">Jun 15, 2021</span><span class="paper-venue">MLSP</span></div>
+        <div><div class="paper-title">MLP Singer: Towards Rapid Parallel Korean Singing Voice Synthesis</div><div class="paper-authors">Jaesung Tae, Hyeongju Kim, Younggun Lee</div></div>
+        <span class="paper-year">2021</span>
+      </a>
+      <a href="https://arxiv.org/abs/2104.01409" target="_blank" class="paper-item">
+        <div class="paper-meta"><span class="paper-num">Apr 3, 2021</span><span class="paper-venue">Interspeech</span></div>
+        <div><div class="paper-title">Diff-TTS: A Denoising Diffusion Model for Text-to-Speech</div><div class="paper-authors">Myeonghun Jeong, Hyeongju Kim, Sung Jun Cheon, Byoung Jin Choi, Nam Soo Kim</div></div>
+        <span class="paper-year">2021</span>
+      </a>
+      <a href="https://arxiv.org/abs/1811.10812" target="_blank" class="paper-item">
+        <div class="paper-meta"><span class="paper-num">Oct 29, 2018</span><span class="paper-venue">Interspeech</span></div>
+        <div><div class="paper-title">Large-scale Speaker Retrieval on Random Speaker-variability Subspace</div><div class="paper-authors">Suwon Shon, Younggun Lee, Taesu Kim</div></div>
+        <span class="paper-year">2019</span>
+      </a>
+      <a href="https://arxiv.org/abs/1811.02122" target="_blank" class="paper-item">
+        <div class="paper-meta"><span class="paper-num">Oct 29, 2018</span><span class="paper-venue">ICASSP</span></div>
+        <div><div class="paper-title">Robust and Fine-grained Prosody Control of End-to-End Speech Synthesis</div><div class="paper-authors">Younggun Lee, Taesu Kim</div></div>
+        <span class="paper-year">2019</span>
+      </a>
+      <a href="https://arxiv.org/abs/1806.00927" target="_blank" class="paper-item">
+        <div class="paper-meta"><span class="paper-num">Jun 3, 2018</span><span class="paper-venue">arXiv</span></div>
+        <div><div class="paper-title">Voice Imitating Text-to-Speech Neural Networks</div><div class="paper-authors">Younggun Lee, Taesu Kim, Soo-Young Lee</div></div>
+        <span class="paper-year">2018</span>
+      </a>
+      <a href="https://arxiv.org/abs/1811.09364" target="_blank" class="paper-item">
+        <div class="paper-meta"><span class="paper-num">Jun 3, 2018</span><span class="paper-venue">arXiv</span></div>
+        <div><div class="paper-title">Learning Pronunciation from a Foreign Language in Speech Synthesis Networks</div><div class="paper-authors">Younggun Lee, Suwon Shon, Taesu Kim</div></div>
+        <span class="paper-year">2018</span>
+      </a>
+      <a href="https://arxiv.org/abs/1711.05447" target="_blank" class="paper-item">
+        <div class="paper-meta"><span class="paper-num">Jun 3, 2018</span><span class="paper-venue">arXiv</span></div>
+        <div><div class="paper-title">Emotional End-to-End Neural Speech Synthesizer</div><div class="paper-authors">Younggun Lee, Azam Rabiee, Soo-Young Lee</div></div>
+        <span class="paper-year">2018</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- IR -->
+<section class="ir-sec sec" id="ir">
+  <div class="inner">
+    <div class="sec-hd">
+      <span class="sec-label" data-ko="IR / 공지" data-en="IR / Notice">IR / 공지</span>
+    </div>
+    <div class="ir-tabs-layout">
+      <!-- LEFT: tab nav -->
+      <div class="ir-tab-nav">
+        <button class="ir-tab-btn active" onclick="switchIrTab(this,'ir-disclosure')" data-ko="공시정보" data-en="Disclosures">공시정보</button>
+        <button class="ir-tab-btn" onclick="switchIrTab(this,'ir-materials')" data-ko="IR자료" data-en="IR Materials">IR자료</button>
+        <button class="ir-tab-btn" onclick="switchIrTab(this,'ir-rules')" data-ko="규정" data-en="Regulations">규정</button>
+        <button class="ir-tab-btn" onclick="switchIrTab(this,'ir-notices')" data-ko="공고사항" data-en="Notices">공고사항</button>
+      </div>
+      <!-- RIGHT: panes -->
+      <div>
+        <!-- 공시정보 -->
+        <div id="ir-disclosure" class="ir-pane active">
+          <div class="ir-pane-hd">
+            <h3 data-ko="공시정보" data-en="Disclosures">공시정보</h3>
+            <span data-ko="DART(전자공시시스템)에서 공식 공시 자료를 확인하실 수 있습니다." data-en="Official disclosures are available on DART (Korea's electronic disclosure system).">DART(전자공시시스템)에서 공식 공시 자료를 확인하실 수 있습니다.</span>
+          </div>
+          <div class="ir-table-card">
+            <table class="ir-table">
+              <thead>
+                <tr>
+                  <th data-ko="보고서명" data-en="Report">보고서명</th>
+                  <th data-ko="제출인" data-en="Filed by">제출인</th>
+                  <th class="col-num" data-ko="접수일자" data-en="Filing Date">접수일자</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260401004316" target="_blank" style="color:var(--text);text-decoration:none;border-bottom:1px solid var(--border);transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--text)'" onmouseout="this.style.borderColor='var(--border)'" data-ko="연결감사보고서 (2025.12)" data-en="Consolidated Audit Report (2025.12)">연결감사보고서 (2025.12)</a></td>
+                  <td data-ko="태성회계법인" data-en="Taesung Accounting Corp.">태성회계법인</td>
+                  <td class="col-num">2026.04.01</td>
+                </tr>
+                <tr>
+                  <td><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260401003842" target="_blank" style="color:var(--text);text-decoration:none;border-bottom:1px solid var(--border);transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--text)'" onmouseout="this.style.borderColor='var(--border)'" data-ko="감사보고서 (2025.12)" data-en="Audit Report (2025.12)">감사보고서 (2025.12)</a></td>
+                  <td data-ko="태성회계법인" data-en="Taesung Accounting Corp.">태성회계법인</td>
+                  <td class="col-num">2026.04.01</td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="display:flex;justify-content:flex-end;padding:18px 24px;border-top:1px solid var(--border);background:var(--bg);">
+              <a href="https://dart.fss.or.kr/html/search/SearchCompanyIR_M.html?textCrpNm=%EB%84%A4%EC%98%A4%EC%82%AC%ED%94%BC%EC%97%94%EC%8A%A4" target="_blank" style="display:inline-flex;align-items:center;gap:6px;font-size:16px;font-weight:600;color:var(--text);text-decoration:none;">
+                <span data-ko="DART에서 전체 보기" data-en="View all on DART">DART에서 전체 보기</span>
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9l4-4M5 5h4v4"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- IR자료 -->
+        <div id="ir-materials" class="ir-pane">
+          <div class="ir-pane-hd">
+            <h3 data-ko="IR자료" data-en="IR Materials">IR자료</h3>
+            <span data-ko="IR 레터 및 보고서 등 투자자 자료를 제공합니다." data-en="IR letters, reports, and other materials for investors.">IR 레터 및 보고서 등 투자자 자료를 제공합니다.</span>
+          </div>
+          <div class="ir-table-card"><div class="ir-empty" data-ko="준비 중입니다." data-en="Coming soon.">준비 중입니다.</div></div>
+        </div>
+        <!-- 규정 -->
+        <div id="ir-rules" class="ir-pane">
+          <div class="ir-pane-hd">
+            <h3 data-ko="규정" data-en="Regulations">규정</h3>
+            <span data-ko="정관, 공시정보관리규정 등 주요 내부 규정입니다." data-en="Articles of incorporation, disclosure management policies, and other internal regulations.">정관, 공시정보관리규정 등 주요 내부 규정입니다.</span>
+          </div>
+          <div class="ir-table-card"><div class="ir-empty" data-ko="준비 중입니다." data-en="Coming soon.">준비 중입니다.</div></div>
+        </div>
+        <!-- 공고사항 -->
+        <div id="ir-notices" class="ir-pane">
+          <div class="ir-pane-hd">
+            <h3 data-ko="공고사항" data-en="Notices">공고사항</h3>
+            <span data-ko="주총 소집통지, 외부감사인 선임 공고, 배당기준일 공고 등 각종 공고사항을 안내합니다." data-en="Notices including general meeting calls, external auditor appointments, dividend record dates, and more.">주총 소집통지, 외부감사인 선임 공고, 배당기준일 공고 등 각종 공고사항을 안내합니다.</span>
+          </div>
+          <div class="ir-table-card">
+            <ul class="ir-list">
+              <li>
+                <a href="https://company.typecast.ai/ir/260317-electronic-securities.pdf" target="_blank">
+                  <div class="ir-list-text">
+                    <span class="ir-list-date">2026-03-17</span>
+                    <span class="ir-list-title" data-ko="전자증권 전환 대상 주권 등의 권리자 보호를 위한 통지" data-en="Notice for the Protection of Rights Holders of Stock Certificates Subject to Electronic Securities Conversion">전자증권 전환 대상 주권 등의 권리자 보호를 위한 통지</span>
+                  </div>
+                  <span class="ir-list-meta">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l5 5-5 5"/></svg>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://company.typecast.ai/ir/260226-auditor.pdf" target="_blank">
+                  <div class="ir-list-text">
+                    <span class="ir-list-date">2026-02-26</span>
+                    <span class="ir-list-title" data-ko="외부감사인 선임 공고" data-en="External Auditor Appointment Notice">외부감사인 선임 공고</span>
+                  </div>
+                  <span class="ir-list-meta">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l5 5-5 5"/></svg>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://company.typecast.ai/ir/260213-new-shares.pdf" target="_blank">
+                  <div class="ir-list-text">
+                    <span class="ir-list-date">2026-02-13</span>
+                    <span class="ir-list-title" data-ko="신주발행공고" data-en="New Share Issuance Notice">신주발행공고</span>
+                  </div>
+                  <span class="ir-list-meta">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l5 5-5 5"/></svg>
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <a href="#" class="logo"><img src="logo.svg" alt="Neosapience"></a>
+      <div class="footer-company-name">네오사피엔스 주식회사</div>
+      <div class="footer-info">
+        사업자 등록번호: 883-86-00767　｜　대표자: 김태수<br>
+        주소: 서울 강남구 영동대로96길 20 (삼성동), 대화빌딩 5층<br>
+        전화: 070-4112-4548
+      </div>
+      <div class="footer-copyright">Copyright &copy; 2026 Neosapience Inc. All Rights Reserved.</div>
+    </div>
+    <div class="footer-right">
+      <nav class="footer-nav">
+        <a href="#about" data-ko="회사소개" data-en="About">회사소개</a>
+        <a href="#services" data-ko="제품 소개" data-en="Products">제품 소개</a>
+        <a href="#technology" data-ko="기술 &amp; 연구" data-en="Tech & Research">기술 &amp; 연구</a>
+        <a href="#ir" data-ko="IR / 공지" data-en="IR / Notice">IR / 공지</a>
+        <a href="mailto:contact@neosapience.com" data-ko="문의하기" data-en="Contact">문의하기</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ── Lang ── */
+  let currentLang = 'ko';
+  function setLang(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-ko]').forEach(el => {
+      const val = el.getAttribute('data-' + lang);
+      if (val === null) return;
+      if (el.tagName === 'INPUT') el.placeholder = val;
+      else el.innerHTML = val;
+    });
+    document.getElementById('btnKo').classList.toggle('active', lang === 'ko');
+    document.getElementById('btnEn').classList.toggle('active', lang === 'en');
+    document.getElementById('mobBtnKo').classList.toggle('active', lang === 'ko');
+    document.getElementById('mobBtnEn').classList.toggle('active', lang === 'en');
+    reinitAnims();
+  }
+
+  /* ── Tabs ── */
+  function switchTab(btn, tabId) {
+    document.querySelectorAll('.stab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.showcase-body').forEach(p => p.style.display = 'none');
+    btn.classList.add('active');
+    document.getElementById(tabId).style.display = 'block';
+  }
+  document.querySelectorAll('.stab').forEach(btn => {
+    btn.addEventListener('click', () => switchTab(btn, btn.dataset.tab));
+  });
+
+  /* ── Nav dropdown ── */
+  const serviceNav = document.getElementById('serviceNav');
+  document.getElementById('serviceBtn').addEventListener('click', e => { e.stopPropagation(); serviceNav.classList.toggle('open'); });
+  document.addEventListener('click', () => serviceNav.classList.remove('open'));
+
+  /* ── Animations ── */
+  function splitWords(el, baseDelay) {
+    const lines = el.innerHTML.split(/<br\s*\/?>/i);
+    let wi = 0;
+    el.innerHTML = lines.map(line => {
+      const text = line.replace(/<[^>]+>/g, '').trim();
+      return text.split(/\s+/).filter(Boolean).map(word => {
+        const d = (baseDelay + wi++ * 0.07).toFixed(2);
+        return `<span class="mask-wrap"><span class="mask-inner" style="transition-delay:${d}s">${word}</span></span>`;
+      }).join(' ');
+    }).join('<br>');
+  }
+
+  function triggerHero() {
+    const heroEl = document.querySelector('.anim-hero');
+    if (!heroEl) return;
+    const inner = heroEl.querySelector('span') || heroEl;
+    splitWords(inner, 0.05);
+    setTimeout(() => heroEl.querySelectorAll('.mask-inner').forEach(m => m.classList.add('in')), 60);
+    const wc = heroEl.querySelectorAll('.mask-inner').length;
+    const after = wc * 65 + 600;
+    document.querySelectorAll('.hero .fade-up').forEach((el, i) => {
+      setTimeout(() => el.classList.add('in'), after + i * 140);
+    });
+  }
+
+  const titleObs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      splitWords(el, 0);
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        el.querySelectorAll('.mask-inner').forEach((m, i) => {
+          m.style.transitionDelay = (i * 0.08).toFixed(2) + 's';
+          m.classList.add('in');
+        });
+      }));
+      titleObs.unobserve(el);
+    });
+  }, { threshold: 0.2 });
+
+  const fadeObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); fadeObs.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+
+  function reinitAnims() {
+    document.querySelectorAll('.anim-title').forEach(el => { titleObs.unobserve(el); titleObs.observe(el); });
+    triggerHero();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    triggerHero();
+    document.querySelectorAll('.anim-title').forEach(el => titleObs.observe(el));
+    document.querySelectorAll('.fade-up:not(.hero .fade-up)').forEach(el => fadeObs.observe(el));
+  });
+
+  /* ── Mobile menu ── */
+  const mobileMenu = document.getElementById('mobileMenu');
+  const menuBtn = document.getElementById('menuBtn');
+  menuBtn.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    menuBtn.classList.toggle('is-open', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+  document.querySelectorAll('.mob-link, .mob-cta').forEach(a => {
+    a.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      menuBtn.classList.remove('is-open');
+      document.body.style.overflow = '';
+    });
+  });
+
+  /* ── IR tabs ── */
+  function togglePapers() {
+    const list = document.getElementById('papersList');
+    const top = document.getElementById('papersTop');
+    const isOpen = list.classList.toggle('open');
+    top.classList.toggle('open', isOpen);
+  }
+
+  function switchIrTab(btn, paneId) {
+    document.querySelectorAll('.ir-tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.ir-pane').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(paneId).classList.add('active');
+  }
+
+  /* ── Active nav ── */
+  const navAnchors = document.querySelectorAll('nav a.nav-link[href^="#"]');
+  const allSections = document.querySelectorAll('[id]');
+  window.addEventListener('scroll', () => {
+    let active = '';
+    allSections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) active = s.id; });
+    navAnchors.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + active));
+  }, { passive: true });
+</script>
+</body>
+</html>
