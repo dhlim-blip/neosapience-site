@@ -29,7 +29,7 @@
     html { scroll-behavior: smooth; }
     body { font-family: 'Pretendard Variable', Pretendard, -apple-system, sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; line-height: 1.5; -webkit-font-smoothing: antialiased; letter-spacing: -1px; }
 
-    /* ── CONTAINER — 헤더·모든 섹션 동일한 max-width·padding ── */
+    /* CONTAINER - 헤더·모든 섹션 동일한 max-width·padding */
     .inner {
       max-width: 1280px;
       margin: 0 auto;
@@ -543,7 +543,7 @@
     <div class="hero-grid">
       <!-- LEFT: title + buttons -->
       <div>
-        <p class="sec-label" style="color:var(--accent);margin-bottom:16px;">ABOUT</p>
+        <p class="sec-label" style="color:var(--accent);margin-bottom:16px;" data-ko="회사 소개" data-en="About">회사 소개</p>
         <h1 class="hero-title anim-hero">
           <span data-ko="우리가 만드는 AI가<br>우리 삶의 가장 자연스러운<br>인터페이스가 된다" data-en="The AI We Create Becomes<br>the Most Natural Interface<br>for Our Lives">우리가 만드는 AI가<br>우리 삶의 가장 자연스러운<br>인터페이스가 된다</span>
         </h1>
@@ -568,26 +568,32 @@
 <section class="about-sec sec" id="about">
   <div class="inner">
     <div class="fade-up" style="max-width:720px;padding:48px 0;">
-      <p class="body-t" style="margin-bottom:20px;"
-        data-ko="네오사피엔스는 새로운 지능을 창조하여 인간의 잠재력을 깨우고, 우리의 삶의 방식을 새롭게 발명합니다.<br>그것이 우리가 존재하는 이유입니다."
-        data-en="Neosapience creates a new intelligence to unlock human potential and reinvent the way we live.<br>That is our reason for being.">네오사피엔스는 새로운 지능을 창조하여 인간의 잠재력을 깨우고, 우리의 삶의 방식을 새롭게 발명합니다.<br>그것이 우리가 존재하는 이유입니다.</p>
-      <p class="body-t" style="margin-bottom:48px;"
-        data-ko="우리가 만드는 AI는 우리 삶의 가장 자연스러운 인터페이스가 되어, 창작하고 대화하며 교감하는 일상의 모든 순간에 함께합니다.<br>복잡한 도구를 새로 배우거나 기술의 장벽을 넘지 않아도, 누구나 막힘없이 새로운 지능을 곁에 두고 활용하게 되는 것 — 그것이 우리가 그리는 미래입니다."
-        data-en="The AI we create becomes the most natural interface for our lives — present in every moment we create, converse, and connect.<br>Without learning complex tools or crossing technical barriers, anyone can keep this new intelligence close at hand. That is the future we envision.">우리가 만드는 AI는 우리 삶의 가장 자연스러운 인터페이스가 되어, 창작하고 대화하며 교감하는 일상의 모든 순간에 함께합니다.<br>복잡한 도구를 새로 배우거나 기술의 장벽을 넘지 않아도, 누구나 막힘없이 새로운 지능을 곁에 두고 활용하게 되는 것 — 그것이 우리가 그리는 미래입니다.</p>
+      <div style="margin-bottom:40px;">
+        <p class="sec-label" style="color:var(--accent);margin-bottom:12px;" data-ko="미션" data-en="Mission">미션</p>
+        <p class="body-t"
+          data-ko="네오사피엔스는 새로운 지능을 창조하여 인간의 잠재력을 깨우고, 우리의 삶의 방식을 새롭게 발명합니다.<br>그것이 우리가 존재하는 이유입니다."
+          data-en="Neosapience creates a new intelligence to unlock human potential and reinvent the way we live.<br>That is our reason for being.">네오사피엔스는 새로운 지능을 창조하여 인간의 잠재력을 깨우고, 우리의 삶의 방식을 새롭게 발명합니다.<br>그것이 우리가 존재하는 이유입니다.</p>
+      </div>
+      <div style="margin-bottom:48px;">
+        <p class="sec-label" style="color:var(--accent);margin-bottom:12px;" data-ko="비전" data-en="Vision">비전</p>
+        <p class="body-t"
+          data-ko="우리가 만드는 AI는 우리 삶의 가장 자연스러운 인터페이스가 되어, 창작하고 대화하며 교감하는 일상의 모든 순간에 함께합니다.<br>복잡한 도구를 새로 배우거나 기술의 장벽을 넘지 않아도, 누구나 막힘없이 새로운 지능을 곁에 두고 활용하게 되는 것, 그것이 우리가 그리는 미래입니다."
+          data-en="The AI we create becomes the most natural interface for our lives, present in every moment we create, converse, and connect.<br>Without learning complex tools or crossing technical barriers, anyone can keep this new intelligence close at hand. That is the future we envision.">우리가 만드는 AI는 우리 삶의 가장 자연스러운 인터페이스가 되어, 창작하고 대화하며 교감하는 일상의 모든 순간에 함께합니다.<br>복잡한 도구를 새로 배우거나 기술의 장벽을 넘지 않아도, 누구나 막힘없이 새로운 지능을 곁에 두고 활용하게 되는 것, 그것이 우리가 그리는 미래입니다.</p>
+      </div>
 
       <div style="display:flex;flex-direction:column;gap:24px;">
         <div>
           <span style="font-size:16px;font-weight:700;color:var(--text);">Typecast</span>
           <p class="body-t" style="margin-top:8px;"
             data-ko="대본 하나로 누구나 손쉽게 여러 AI 보이스 캐릭터를 캐스팅해, 자연스럽고 개성 있는 음성과 영상 콘텐츠를 제작할 수 있도록 돕는 크리에이티브 TTS 서비스입니다."
-            data-en="A creative TTS platform that lets anyone cast multiple AI voice characters from a single script — producing natural, expressive audio and video content with ease.">대본 하나로 누구나 손쉽게 여러 AI 보이스 캐릭터를 캐스팅해, 자연스럽고 개성 있는 음성과 영상 콘텐츠를 제작할 수 있도록 돕는 크리에이티브 TTS 서비스입니다.</p>
+            data-en="A creative TTS platform that lets anyone cast multiple AI voice characters from a single script, producing natural, expressive audio and video content with ease.">대본 하나로 누구나 손쉽게 여러 AI 보이스 캐릭터를 캐스팅해, 자연스럽고 개성 있는 음성과 영상 콘텐츠를 제작할 수 있도록 돕는 크리에이티브 TTS 서비스입니다.</p>
         </div>
         <div style="border-top:1px dashed var(--border);margin:8px 0;"></div>
         <div>
           <span style="font-size:16px;font-weight:700;color:var(--text);">Neona</span>
           <p class="body-t" style="margin-top:8px;"
             data-ko="감정까지 교류하며 소통할 수 있는 대화형 AI 에이전트를, 원하는 채널과 페르소나로 설계·배포하고 보유한 IP(캐릭터/브랜드 자산)를 활용해 고객과 실시간으로 소통할 수 있는 Live Chat 경험까지 제공하는 대화형 AI 플랫폼입니다."
-            data-en="A conversational AI platform — design and deploy emotionally intelligent agents across any channel and persona, and bring your IP (characters, brand assets) to life with real-time Live Chat experiences for customer engagement.">감정까지 교류하며 소통할 수 있는 대화형 AI 에이전트를, 원하는 채널과 페르소나로 설계·배포하고 보유한 IP(캐릭터/브랜드 자산)를 활용해 고객과 실시간으로 소통할 수 있는 Live Chat 경험까지 제공하는 대화형 AI 플랫폼입니다.</p>
+            data-en="A conversational AI platform: design and deploy emotionally intelligent agents across any channel and persona, and bring your IP (characters, brand assets) to life with real-time Live Chat experiences for customer engagement.">감정까지 교류하며 소통할 수 있는 대화형 AI 에이전트를, 원하는 채널과 페르소나로 설계·배포하고 보유한 IP(캐릭터/브랜드 자산)를 활용해 고객과 실시간으로 소통할 수 있는 Live Chat 경험까지 제공하는 대화형 AI 플랫폼입니다.</p>
         </div>
       </div>
     </div>
@@ -601,13 +607,13 @@
       <span class="sec-label" data-ko="제품 소개" data-en="Products">제품 소개</span>
     </div>
     <div class="svc-grid">
-      <!-- Typecast — 왼쪽 -->
+      <!-- Typecast 왼쪽 -->
       <div class="svc-card fade-up" id="typecast">
         <div class="svc-tag">TYPECAST</div>
         <h3 class="svc-title" data-ko="내 콘텐츠에 딱 맞는 AI 보이스로<br>콘텐츠 제작 뚝딱!" data-en="Create Content Instantly<br>with the Perfect AI Voice">내 콘텐츠에 딱 맞는 AI 보이스로<br>콘텐츠 제작 뚝딱!</h3>
         <p class="svc-desc"
           data-ko="대본 하나로 누구나 손쉽게 콘텐츠 제작이 뚝딱!<br>여러 자연스럽고 개성 있는 AI 보이스 캐릭터를 캐스팅해,<br>음성과 영상 콘텐츠를 제작할 수 있도록 돕는 크리에이티브 TTS 서비스입니다."
-          data-en="Create content in a snap — no expertise needed.<br>Cast multiple natural, expressive AI voice characters<br>and bring your audio and video content to life.">
+          data-en="Create content in a snap, no expertise needed.<br>Cast multiple natural, expressive AI voice characters<br>and bring your audio and video content to life.">
           대본 하나로 누구나 손쉽게 콘텐츠 제작이 뚝딱!<br>여러 자연스럽고 개성 있는 AI 보이스 캐릭터를 캐스팅해,<br>음성과 영상 콘텐츠를 제작할 수 있도록 돕는 크리에이티브 TTS 서비스입니다.
         </p>
         <a href="https://typecast.ai" target="_blank" class="svc-arrow"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M4 9h10M9 4l5 5-5 5"/></svg></a>
@@ -615,7 +621,7 @@
           <img src="typecast-app.png" alt="Typecast app interface">
         </div>
       </div>
-      <!-- Neona — 단일 카드 -->
+      <!-- Neona 단일 카드 -->
       <div class="svc-card fade-up" style="padding:40px 40px 0;">
         <div class="svc-tag">NEONA</div>
         <h3 class="svc-title" data-ko="감정으로 대화하는<br>AI Voice 플랫폼" data-en="The AI Voice Platform<br>That Speaks With Emotion">감정으로 대화하는<br>AI Voice 플랫폼</h3>
