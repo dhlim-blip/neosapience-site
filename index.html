@@ -166,7 +166,14 @@
 
     /* ── SERVICES (bento cards) ── */
     .svc-sec { background: var(--bg-2); border-top: 1px solid var(--border); }
-    .svc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: stretch; }
+    .svc-grid { display: flex; gap: 12px; align-items: stretch; }
+    .svc-grid > .svc-card { flex: 1 1 0; min-width: 0; }
+    /* Sendbird-style fork hover: hovered card expands, sibling contracts (desktop, hover devices only) */
+    @media (hover: hover) and (min-width: 1025px) {
+      .svc-grid > .svc-card { transition: flex-grow 0.55s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s ease; }
+      .svc-grid:has(> .svc-card:hover) > .svc-card { flex-grow: 0.82; }
+      .svc-grid > .svc-card:hover { flex-grow: 1.45; box-shadow: 0 22px 48px rgba(0, 0, 0, 0.10); }
+    }
     .svc-card {
       background: #fff; border-radius: 20px;
       border: none; padding: 40px 40px 0;
@@ -382,7 +389,8 @@
       .about-facts { grid-template-columns: 1fr 1fr; }
       .about-fact:nth-child(2) { border-right: none; }
       .about-fact:nth-child(3) { border-top: 1px solid var(--border); padding-left: 0; border-right: none; }
-      .svc-grid { grid-template-columns: 1fr; }
+      .svc-grid { flex-direction: column; }
+      .svc-grid > .svc-card { flex: 0 0 auto; }
       .tech-2col { grid-template-columns: 1fr; gap: 28px; }
       .tech-grid { grid-template-columns: 1fr 1fr; }
       .contact-card { padding: 64px 40px; }
