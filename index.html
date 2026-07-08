@@ -166,7 +166,7 @@
 
     /* ── SERVICES (bento cards) ── */
     .svc-sec { background: var(--bg-2); border-top: 1px solid var(--border); }
-    .svc-grid { display: grid; grid-template-columns: 3fr 2fr; gap: 12px; align-items: start; }
+    .svc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: stretch; }
     .svc-card {
       background: #fff; border-radius: 20px;
       border: none; padding: 40px 40px 0;
@@ -582,7 +582,7 @@
     <div class="sec-hd">
       <span class="sec-label" data-ko="제품 소개" data-en="Products">제품 소개</span>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:stretch;">
+    <div class="svc-grid">
       <!-- Typecast — 왼쪽 -->
       <div class="svc-card fade-up" id="typecast">
         <div class="svc-tag">TYPECAST</div>
