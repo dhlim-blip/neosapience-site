@@ -186,6 +186,9 @@
     .svc-title { font-size: clamp(24px, 2.6vw, 36px); font-weight: 700; letter-spacing: -1px; color: var(--text); line-height: 1.1; margin-bottom: 0; flex: 1; min-width: 0; }
     .svc-arrow { display: inline-flex; align-items: center; justify-content: center; width: 60px; height: 60px; min-width: 60px; flex-shrink: 0; background: var(--dark); border-radius: 50%; transition: opacity 0.15s, transform 0.2s; }
     .svc-arrow:hover { opacity: 0.75; transform: translateY(-2px); }
+    .svc-dots { display: none; }
+    .svc-dot { width: 8px; height: 8px; border-radius: 50%; border: none; padding: 0; background: var(--border); cursor: pointer; transition: background 0.25s, width 0.25s; }
+    .svc-dot.active { background: var(--text); width: 22px; border-radius: 100px; }
     .svc-desc { font-size: 16px; color: var(--text-2); line-height: 1.75; margin-bottom: 0; max-width: 360px; }
     .svc-link { display: inline-flex; align-items: center; gap: 7px; font-size: 16px; font-weight: 600; text-decoration: none; padding: 9px 18px; border-radius: 100px; transition: opacity 0.15s; align-self: flex-start; margin-bottom: 32px; }
     .svc-link:hover { opacity: 0.78; }
@@ -424,6 +427,18 @@
       .about-fact:last-child { padding-right: 0; }
 
       .svc-card { padding: 28px; min-height: 360px; }
+      /* 모바일: 제품 카드 가로 슬라이드 (Figma 레퍼런스, 좌우 마진 ~16px, peek) */
+      .svc-grid {
+        flex-direction: row; flex-wrap: nowrap;
+        overflow-x: auto; scroll-snap-type: x mandatory;
+        gap: 12px; padding: 4px 0 12px;
+        scrollbar-width: none; -webkit-overflow-scrolling: touch;
+      }
+      .svc-grid::-webkit-scrollbar { display: none; }
+      .svc-grid > .svc-card { flex: 0 0 90%; scroll-snap-align: start; }
+      .svc-title-row { gap: 12px; }
+      .svc-arrow { width: 46px; height: 46px; min-width: 46px; }
+      .svc-dots { display: flex; justify-content: center; gap: 8px; margin-top: 20px; }
       .footer-inner { grid-template-columns: 1fr; gap: 28px; }
       .footer-right { align-items: flex-start; padding-top: 0; }
       .footer-nav { justify-content: flex-start; margin-left: -12px; }
@@ -465,8 +480,8 @@
       .about-fact:first-child { border-top: none !important; }
 
       .svc-card { padding: 22px; min-height: auto; }
-      .svc-title-row { gap: 16px; }
-      .svc-arrow { width: 48px; height: 48px; min-width: 48px; }
+      .svc-title-row { gap: 8px; }
+      .svc-arrow { width: 42px; height: 42px; min-width: 42px; }
       .svc-nums { gap: 20px; }
       .showcase-body { padding: 20px; }
       .showcase-tabs { padding: 10px 14px; }
@@ -640,6 +655,10 @@
           <div class="grain-overlay"></div>
         </div>
       </div>
+    </div>
+    <div class="svc-dots">
+      <button class="svc-dot active" type="button" aria-label="Typecast"></button>
+      <button class="svc-dot" type="button" aria-label="Neona"></button>
     </div>
   </div>
 </section>
@@ -1024,6 +1043,41 @@
     allSections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) active = s.id; });
     navAnchors.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + active));
   }, { passive: true });
+
+  /* ── 제품 소개 모바일 슬라이드 dots ── */
+  (function () {
+    var grid = document.querySelector('.svc-grid');
+    var dotsWrap = document.querySelector('.svc-dots');
+    if (!grid || !dotsWrap) return;
+    var cards = grid.querySelectorAll('.svc-card');
+    var dots = dotsWrap.querySelectorAll('.svc-dot');
+    function activeIndex() {
+      var gr = grid.getBoundingClientRect();
+      var viewCenter = gr.left + gr.width / 2;
+      var best = 0, bestDist = Infinity;
+      cards.forEach(function (c, i) {
+        var r = c.getBoundingClientRect();
+        var dist = Math.abs(r.left + r.width / 2 - viewCenter);
+        if (dist < bestDist) { bestDist = dist; best = i; }
+      });
+      return best;
+    }
+    function sync() {
+      var idx = activeIndex();
+      dots.forEach(function (d, i) { d.classList.toggle('active', i === idx); });
+    }
+    grid.addEventListener('scroll', function () { window.requestAnimationFrame(sync); }, { passive: true });
+    dots.forEach(function (d, i) {
+      d.addEventListener('click', function () {
+        var target = cards[i];
+        if (!target) return;
+        var pad = parseFloat(getComputedStyle(grid).paddingLeft) || 0;
+        var delta = target.getBoundingClientRect().left - grid.getBoundingClientRect().left - pad;
+        grid.scrollBy({ left: delta, behavior: 'smooth' });
+      });
+    });
+    sync();
+  })();
 </script>
 </body>
 </html>
